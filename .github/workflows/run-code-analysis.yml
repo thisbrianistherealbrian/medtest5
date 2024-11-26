@@ -1,0 +1,20 @@
+name: run-code-analysis
+
+on: push
+
+jobs:
+  run-code-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: Copy .env
+        run: cp .env.example .env
+      - name: Install dependencies
+        run: composer install --no-interaction
+      - name: Run analysis
+        run: vendor/bin/phpstan
